@@ -26,6 +26,16 @@ app.use([
   express.urlencoded({ extended: true }),
 ]);
 
+app.use((req, res, next) => {
+  const allowedOrigins = [process.env.FRONTEND_DOMAIN, 'http://localhost:8080'];
+  const origin = req.headers.origin;
+  if(allowedOrigins.includes(origin)) {
+    res.setHeader('Access-Control-Allow-Origin', origin);
+  }
+  res.setHeader('Access-Control-Allow-Origin', 'GET', 'POST', 'PUT', 'DELETE');
+  res.setHeader('Access-Control-Allow-Origin', 'Content-Type, Authorization');
+})
+
 const sessionStore = new MongoStore({
   mongoUrl: process.env.MONGO_URL,
   collectionName: "session",
