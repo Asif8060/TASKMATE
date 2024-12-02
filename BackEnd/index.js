@@ -36,6 +36,8 @@ app.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Origin', 'Content-Type, Authorization');
 })
 
+app.options('*', cors());
+
 const sessionStore = new MongoStore({
   mongoUrl: process.env.MONGO_URL,
   collectionName: "session",
